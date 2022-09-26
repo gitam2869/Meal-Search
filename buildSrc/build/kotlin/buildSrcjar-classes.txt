@@ -1,0 +1,1 @@
+/home/gautam/AndroidStudioProjects/CleanArc/MealSearch/buildSrc/build/classes/kotlin/main/Deps.class:/home/gautam/AndroidStudioProjects/CleanArc/MealSearch/buildSrc/build/classes/kotlin/main/Versions.class
