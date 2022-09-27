@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.app.mealsearch.databinding.ActivityMainBinding
+import com.app.mealsearch.utils.Keys
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.tv.apply {
-            text = "Hello Clean Arch."
+            text = Keys.BASE_URL
         }
     }
 }
