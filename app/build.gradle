@@ -37,7 +37,7 @@ android {
         dataBinding = true
     }
 
-
+    //Cmake for base url
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
@@ -71,7 +71,7 @@ dependencies {
     //Coroutines
     implementation (Deps.coroutines)
 
-    implementation (Deps.dagger_hilt)
-    kapt (Deps.dagger_hilt_kapt)
+//    implementation (Deps.dagger_hilt)
+//    kapt (Deps.dagger_hilt_kapt)
 
 }
