@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -62,5 +63,8 @@ dependencies {
 
     //Coroutines
     implementation (Deps.coroutines)
+
+    implementation (Deps.dagger_hilt)
+    kapt (Deps.dagger_hilt_kapt)
 
 }
