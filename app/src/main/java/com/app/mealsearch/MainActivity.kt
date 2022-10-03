@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.app.mealsearch.databinding.ActivityMainBinding
 import com.app.mealsearch.utils.Keys
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
@@ -15,9 +17,5 @@ class MainActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main) as ActivityMainBinding
         setContentView(binding.root)
-
-        binding.tv.apply {
-            text = Keys.BASE_URL
-        }
     }
 }

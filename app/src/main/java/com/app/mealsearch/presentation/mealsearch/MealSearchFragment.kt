@@ -1,0 +1,65 @@
+package com.app.mealsearch.presentation.mealsearch
+
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.app.mealsearch.R
+import com.app.mealsearch.databinding.FragmentMealSearchBinding
+import com.app.mealsearch.utils.ViewListener.Companion.setOnSingleClickListener
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+
+@AndroidEntryPoint
+class MealSearchFragment : Fragment() {
+
+    private val TAG = "MealSearchFragment"
+
+    private var _binding: FragmentMealSearchBinding? = null
+    private val binding: FragmentMealSearchBinding
+        get() = _binding!!
+
+    private val mealSearchViewModel: MealSearchViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        _binding = FragmentMealSearchBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        lifecycleScope.launch {
+            mealSearchViewModel.mealSearchList.collect {
+                Log.d(TAG, "onViewCreated: mealSearchViewModel "+System.currentTimeMillis())
+                if(it.isLoading){
+                    Log.d(TAG, "onViewCreated: Loading....")
+                }
+                if(it.error.isNotBlank()){
+                    Log.d(TAG, "onViewCreated: Error "+it.error)
+                }
+
+                it.data?.let {
+                    Log.d(TAG, "onViewCreated: Suceess "+it)
+                }
+            }
+        }
+
+        mealSearchViewModel.searchMealList("Chicken")
+
+        binding.btnNext.setOnSingleClickListener{
+            findNavController().navigate(
+                R.id.MealDetailsFragment
+            )
+        }
+    }
+}

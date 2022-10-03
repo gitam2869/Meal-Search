@@ -8,7 +8,7 @@
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_app_mealsearch_utils_Keys_devBaseURL(JNIEnv *env, jobject thiz) {
-    std::string base_url = "www.themealdb.com";
+    std::string base_url = "https://themealdb.com";
     return env->NewStringUTF(base_url.c_str());
 }
 
