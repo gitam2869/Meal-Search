@@ -17,8 +17,10 @@ class MealDetailsUseCase @Inject constructor(private val repository: MealDetails
         try {
 
             emit(Resource.Loading())
-            val response = repository.getMealDetails(id).meals.first().toDomainMealDetails()
-            emit(Resource.Success(response))
+            val response = repository.getMealDetails(id).meals?.first()?.toDomainMealDetails()
+            response?.let {
+                emit(Resource.Success(it))
+            }
 
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "Unknown Error!"))

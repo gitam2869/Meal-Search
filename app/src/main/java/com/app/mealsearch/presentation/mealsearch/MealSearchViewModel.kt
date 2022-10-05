@@ -25,7 +25,7 @@ class MealSearchViewModel @Inject constructor(private val mealListUseCase: MealL
                     _mealSearchList.value = MealSearchState(isLoading = true)
                 }
                 is Resource.Error -> {
-                    _mealSearchList.value = MealSearchState(error = it.message ?: "asa")
+                    _mealSearchList.value = MealSearchState(error = it.message ?: "")
                 }
                 is Resource.Success -> {
                     _mealSearchList.value = MealSearchState(data = it.data)

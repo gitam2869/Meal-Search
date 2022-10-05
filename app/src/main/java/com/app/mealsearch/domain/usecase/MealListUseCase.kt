@@ -1,5 +1,6 @@
 package com.app.mealsearch.domain.usecase
 
+import android.util.Log
 import com.app.mealsearch.data.model.toDomainMeal
 import com.app.mealsearch.domain.model.Meal
 import com.app.mealsearch.domain.repository.MealListRepository
@@ -18,7 +19,7 @@ class MealListUseCase @Inject constructor(private val repository: MealListReposi
 
             val response = repository.getMealList(name)
             val list =
-                if (response.meals.isEmpty()) emptyList<Meal>() else response.meals.map { it.toDomainMeal() }
+                if ((response.meals == null) || response.meals.isEmpty()) emptyList<Meal>() else response.meals.map { it.toDomainMeal() }
 
             emit(Resource.Success(list))
 

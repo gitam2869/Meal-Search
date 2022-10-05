@@ -72,7 +72,11 @@ dependencies {
     //Coroutines
     implementation (Deps.coroutines)
 
+    //Dagger-Hilt
     implementation (Deps.dagger_hilt)
     kapt (Deps.dagger_hilt_kapt)
+
+    //Glide
+    implementation (Deps.glide)
 
 }

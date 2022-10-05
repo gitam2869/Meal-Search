@@ -63,7 +63,7 @@ fun MealDTO.toDomainMeal(): Meal {
     return Meal(
         id = this.idMeal,
         name = this.strMeal ?: "",
-        image = this.strImageSource ?: ""
+        image = this.strMealThumb ?: ""
     )
 }
 

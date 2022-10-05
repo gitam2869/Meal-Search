@@ -12,6 +12,7 @@ object Versions {
     val retrofit = "2.9.0"
     val coroutines = "1.6.4"
     val dagger_hilt = "2.42"
+    val glide = "4.14.1"
 }
 
 object Deps {
@@ -43,4 +44,7 @@ object Deps {
     //Dagger-Hilt
     val dagger_hilt = "com.google.dagger:hilt-android:${Versions.dagger_hilt}"
     val dagger_hilt_kapt = "com.google.dagger:hilt-compiler:${Versions.dagger_hilt}"
+
+    //Glide
+    val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
 }

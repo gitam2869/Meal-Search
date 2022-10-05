@@ -5,13 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.app.mealsearch.R
 import com.app.mealsearch.databinding.FragmentMealSearchBinding
-import com.app.mealsearch.utils.ViewListener.Companion.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -26,6 +26,8 @@ class MealSearchFragment : Fragment() {
 
     private val mealSearchViewModel: MealSearchViewModel by viewModels()
 
+    private lateinit var mealSearchAdapter: MealSearchAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,28 +40,71 @@ class MealSearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        defaultSetUp()
+
+        binding.svMeal.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    mealSearchAdapter.submitList(emptyList())
+                    mealSearchViewModel.searchMealList(it)
+                }
+                return false
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+
+        mealSearchAdapter = MealSearchAdapter()
+        binding.rvMeal.apply {
+            adapter = mealSearchAdapter
+            layoutManager = GridLayoutManager(requireContext(), 2)
+        }
+
         lifecycleScope.launch {
             mealSearchViewModel.mealSearchList.collect {
-                Log.d(TAG, "onViewCreated: mealSearchViewModel "+System.currentTimeMillis())
-                if(it.isLoading){
+                Log.d(TAG, "onViewCreated: mealSearchViewModel " + System.currentTimeMillis())
+                if (it.isLoading) {
                     Log.d(TAG, "onViewCreated: Loading....")
+                    binding.run {
+                        pbLoading.visibility = View.VISIBLE
+                        tvMessage.visibility = View.GONE
+                    }
                 }
-                if(it.error.isNotBlank()){
-                    Log.d(TAG, "onViewCreated: Error "+it.error)
+                if (it.error.isNotBlank()) {
+                    Log.d(TAG, "onViewCreated: Error " + it.error)
+                    binding.run {
+                        pbLoading.visibility = View.GONE
+                        tvMessage.text = it.error
+                        tvMessage.visibility = View.VISIBLE
+                    }
                 }
 
                 it.data?.let {
-                    Log.d(TAG, "onViewCreated: Suceess "+it)
+                    Log.d(TAG, "onViewCreated: Suceess " + it)
+                    binding.run {
+
+                        if (it.isNotEmpty()) {
+                            pbLoading.visibility = View.GONE
+                            tvMessage.visibility = View.GONE
+                            mealSearchAdapter.submitList(it)
+                        } else {
+                            pbLoading.visibility = View.GONE
+                            tvMessage.text =
+                                requireContext().resources.getString(R.string.not_match)
+                            tvMessage.visibility = View.VISIBLE
+                        }
+                    }
                 }
             }
         }
+    }
 
-        mealSearchViewModel.searchMealList("Chicken")
-
-        binding.btnNext.setOnSingleClickListener{
-            findNavController().navigate(
-                R.id.MealDetailsFragment
-            )
+    private fun defaultSetUp() {
+        binding.run {
+            pbLoading.visibility = View.GONE
+            tvMessage.text = requireContext().resources.getString(R.string.search_your_meal)
+            tvMessage.visibility = View.VISIBLE
         }
     }
 }
