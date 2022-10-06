@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.app.mealsearch.R
 import com.app.mealsearch.databinding.FragmentMealSearchBinding
+import com.app.mealsearch.domain.model.Meal
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -25,8 +26,8 @@ class MealSearchFragment : Fragment() {
         get() = _binding!!
 
     private val mealSearchViewModel: MealSearchViewModel by viewModels()
-
     private lateinit var mealSearchAdapter: MealSearchAdapter
+    private var list: MutableList<Meal> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,7 +56,20 @@ class MealSearchFragment : Fragment() {
             }
         })
 
-        mealSearchAdapter = MealSearchAdapter()
+        mealSearchAdapter = MealSearchAdapter(object : IMealSearchCallback{
+            override fun onCardClick(position: Int, meal: Meal) {
+                Log.d(TAG, "onCardClick: pos->$position meal->$meal")
+
+            }
+
+            override fun onCardLongClick(position: Int, meal: Meal) {
+                val newList = mutableListOf<Meal>()
+                newList.addAll(list)
+                newList.removeAt(position)
+                mealSearchAdapter.submitList(newList)
+                list = newList
+            }
+        })
         binding.rvMeal.apply {
             adapter = mealSearchAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)
@@ -87,7 +101,8 @@ class MealSearchFragment : Fragment() {
                         if (it.isNotEmpty()) {
                             pbLoading.visibility = View.GONE
                             tvMessage.visibility = View.GONE
-                            mealSearchAdapter.submitList(it)
+                            list = it as MutableList<Meal>
+                            mealSearchAdapter.submitList(list)
                         } else {
                             pbLoading.visibility = View.GONE
                             tvMessage.text =
