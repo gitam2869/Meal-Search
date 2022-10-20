@@ -6,5 +6,7 @@
     <string name="enter_meal_here">Enter meal here...</string>
     <string name="search_your_meal">Search your meal...</string>
     <string name="not_match">Not match anything</string>
+    <string name="items">Items</string>
+    <string name="instructions">Instructions</string>
 
 </resources>

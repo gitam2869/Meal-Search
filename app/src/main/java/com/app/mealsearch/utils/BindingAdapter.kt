@@ -8,7 +8,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
 @BindingAdapter("urlToImage")
-fun urlToImage(view: ImageView, url: String) {
+fun urlToImage(view: ImageView, url: String?) {
+    Log.d("TAG", "urlToImage: $url")
     val options = RequestOptions
         .placeholderOf(R.mipmap.ic_launcher)
         .error(R.mipmap.ic_launcher)

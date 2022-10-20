@@ -1,5 +1,6 @@
 package com.app.mealsearch.data.model
 
+import com.app.mealsearch.domain.model.Item
 import com.app.mealsearch.domain.model.Meal
 import com.app.mealsearch.domain.model.MealDetails
 
@@ -68,59 +69,135 @@ fun MealDTO.toDomainMeal(): Meal {
 }
 
 fun MealDTO.toDomainMealDetails(): MealDetails {
+    val list:MutableList<Item> = mutableListOf()
+
+    strIngredient1?.let { it ->
+        strMeasure1?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient2?.let { it ->
+        strMeasure2?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient3?.let { it ->
+        strMeasure3?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient4?.let { it ->
+        strMeasure4?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient5?.let { it ->
+        strMeasure5?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient6?.let { it ->
+        strMeasure6?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient7?.let { it ->
+        strMeasure7?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient8?.let { it ->
+        strMeasure8?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient9?.let { it ->
+        strMeasure9?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient10?.let { it ->
+        strMeasure10?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient11?.let { it ->
+        strMeasure11?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient12?.let { it ->
+        strMeasure12?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient13?.let { it ->
+        strMeasure13?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient14?.let { it ->
+        strMeasure14?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient15?.let { it ->
+        strMeasure15?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient16?.let { it ->
+        strMeasure16?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient17?.let { it ->
+        strMeasure17?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient18?.let { it ->
+        strMeasure18?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient19?.let { it ->
+        strMeasure19?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+    strIngredient20?.let { it ->
+        strMeasure20?.let { it1 ->
+            if(it.isNotEmpty() && it1.isNotEmpty())
+                list.add(Item(it, it1))
+        }
+    }
+
+
     return MealDetails(
-        this.idMeal,
-        this.dateModified ?: "",
-        this.strArea ?: "",
-        this.strCategory ?: "",
-        this.strCreativeCommonsConfirmed ?: "",
-        this.strDrinkAlternate ?: "",
-        this.strImageSource ?: "",
-        this.strIngredient1 ?: "",
-        this.strIngredient10 ?: "",
-        this.strIngredient11 ?: "",
-        this.strIngredient12 ?: "",
-        this.strIngredient13 ?: "",
-        this.strIngredient14 ?: "",
-        this.strIngredient15 ?: "",
-        this.strIngredient16 ?: "",
-        this.strIngredient17 ?: "",
-        this.strIngredient18 ?: "",
-        this.strIngredient19 ?: "",
-        this.strIngredient2 ?: "",
-        this.strIngredient20 ?: "",
-        this.strIngredient3 ?: "",
-        this.strIngredient4 ?: "",
-        this.strIngredient5 ?: "",
-        this.strIngredient6 ?: "",
-        this.strIngredient7 ?: "",
-        this.strIngredient8 ?: "",
-        this.strIngredient9 ?: "",
-        this.strInstructions ?: "",
-        this.strMeal ?: "",
-        this.strMealThumb ?: "",
-        this.strMeasure1 ?: "",
-        this.strMeasure10 ?: "",
-        this.strMeasure11 ?: "",
-        this.strMeasure12 ?: "",
-        this.strMeasure13 ?: "",
-        this.strMeasure14 ?: "",
-        this.strMeasure15 ?: "",
-        this.strMeasure16 ?: "",
-        this.strMeasure17 ?: "",
-        this.strMeasure18 ?: "",
-        this.strMeasure19 ?: "",
-        this.strMeasure2 ?: "",
-        this.strMeasure20 ?: "",
-        this.strMeasure3 ?: "",
-        this.strMeasure4 ?: "",
-        this.strMeasure5 ?: "",
-        this.strMeasure6 ?: "",
-        this.strMeasure7 ?: "",
-        this.strMeasure8 ?: "",
-        this.strMeasure9 ?: "",
-        this.strSource ?: "",
-        this.strTags ?: "",
-        this.strYoutube ?: ""
+        id = this.idMeal,
+        name = this.strMeal ?: "",
+        image = this.strMealThumb ?: "",
+        instructions = this.strInstructions ?: "",
+        list
     )
 }

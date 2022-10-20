@@ -9,6 +9,7 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.app.mealsearch.R
 import com.app.mealsearch.databinding.FragmentMealSearchBinding
@@ -51,15 +52,15 @@ class MealSearchFragment : Fragment() {
                 }
                 return false
             }
+
             override fun onQueryTextChange(newText: String?): Boolean {
                 return false
             }
         })
 
-        mealSearchAdapter = MealSearchAdapter(object : IMealSearchCallback{
+        mealSearchAdapter = MealSearchAdapter(object : IMealSearchCallback {
             override fun onCardClick(position: Int, meal: Meal) {
-                Log.d(TAG, "onCardClick: pos->$position meal->$meal")
-
+                navigateToMealDetails(meal.id)
             }
 
             override fun onCardLongClick(position: Int, meal: Meal) {
@@ -70,6 +71,7 @@ class MealSearchFragment : Fragment() {
                 list = newList
             }
         })
+
         binding.rvMeal.apply {
             adapter = mealSearchAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)
@@ -121,5 +123,11 @@ class MealSearchFragment : Fragment() {
             tvMessage.text = requireContext().resources.getString(R.string.search_your_meal)
             tvMessage.visibility = View.VISIBLE
         }
+    }
+
+    private fun navigateToMealDetails(mealId: String) {
+        findNavController().navigate(
+            MealSearchFragmentDirections.actionMealSearchToMealDetails(mealId)
+        )
     }
 }
