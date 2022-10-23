@@ -11,6 +11,9 @@ object Versions {
     val navigation = "2.5.2"
     val retrofit = "2.9.0"
     val coroutines = "1.6.4"
+    val dagger_hilt = "2.42"
+    val glide = "4.14.1"
+    val airbnb_styles = "2.0.0"
 }
 
 object Deps {
@@ -38,4 +41,15 @@ object Deps {
 
     //Coroutines
     val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+
+    //Dagger-Hilt
+    val dagger_hilt = "com.google.dagger:hilt-android:${Versions.dagger_hilt}"
+    val dagger_hilt_kapt = "com.google.dagger:hilt-compiler:${Versions.dagger_hilt}"
+
+    //Glide
+    val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
+
+    //Apply styles to android views
+    val airbnb_styles = "com.airbnb.android:paris:${Versions.airbnb_styles}"
+    val airbnb_styles_kapt = "com.airbnb.android:paris-processor:${Versions.airbnb_styles}"
 }
