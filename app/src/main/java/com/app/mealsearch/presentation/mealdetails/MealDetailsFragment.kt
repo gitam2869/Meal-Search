@@ -10,9 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.paris.extensions.style
 import com.app.mealsearch.R
 import com.app.mealsearch.databinding.FragmentMealDetailsBinding
 import com.app.mealsearch.utils.ViewExtension.gone
+import com.app.mealsearch.utils.ViewExtension.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -24,6 +27,7 @@ class MealDetailsFragment : Fragment() {
     private val binding: FragmentMealDetailsBinding
         get() = _binding!!
 
+    private lateinit var mealItemsAdapter: MealItemsAdapter
     private val args: MealDetailsFragmentArgs by navArgs()
 
     private val mealDetailsViewModel: MealDetailsViewModel by viewModels()
@@ -40,46 +44,113 @@ class MealDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        defaultSetup()
+
+        mealItemsAdapter = MealItemsAdapter()
+        binding.rvItems.apply {
+            adapter = mealItemsAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+
         args.mealId?.let {
             mealDetailsViewModel.getMealDetails(it)
         }
 
         lifecycleScope.launch {
-            mealDetailsViewModel.mealDetails.collect{
-                Log.d(TAG, "onViewCreated: 1")
-                if(it.isLoading){
-                    Log.d(TAG, "onViewCreated: 2")
+            mealDetailsViewModel.mealDetails.collect {
+                if (it.isLoading) {
                 }
-
-                if(it.error.isNotBlank()){
-                    Log.d(TAG, "onViewCreated: 2 "+it.error)
+                if (it.error.isNotBlank()) {
+                    showErrorView(it.error)
                 }
-
                 it.data?.let {
-                    Log.d(TAG, "onViewCreated: 3 $it")
                     binding.mealDetails = it
+                    mealItemsAdapter.submitList(it.items)
+                    showDataView()
                 }
             }
         }
 
+        binding.btnRequiredItems.setOnClickListener {
+            showItemView()
+        }
 
         binding.btnInstructions.setOnClickListener {
-            var v = binding.mealDetails
-            v?.instructions = "Data binding"
-            v?.image = "https://www.themealdb.com/images/media/meals/1529446352.jpg"
-            binding.mealDetails = v
+            showInstructionView()
         }
     }
 
-    private fun hideItems(){
+    private fun defaultSetup() {
+        binding.run {
+            cvMeal.gone()
+            btnInstructions.gone()
+            btnRequiredItems.gone()
+            tvMessage.gone()
+            pbLoading.visible()
+        }
+    }
+
+
+    private fun showDataView(){
+        binding.run {
+            cvMeal.visible()
+            btnInstructions.visible()
+            btnRequiredItems.visible()
+            tvMessage.gone()
+            pbLoading.gone()
+        }
+        showItemView()
+    }
+
+    private fun showErrorView(error: String) {
+        binding.run {
+            cvMeal.gone()
+            btnInstructions.gone()
+            btnRequiredItems.gone()
+            pbLoading.gone()
+            tvMessage.visible()
+
+            tvMessage.text = error
+        }
+    }
+
+    private fun showItemView() {
+        hideInstructions()
+        showItems()
+    }
+
+    private fun showInstructionView() {
+        hideItems()
+        showInstructions()
+    }
+
+    private fun hideItems() {
         binding.run {
             rvItems.gone()
-            btnRequiredItems.style
+            btnRequiredItems.style(R.style.PrimaryOutlinedButton)
         }
     }
 
-    private fun hideInstructions(){
+    private fun hideInstructions() {
+        binding.run {
+            nsInstructions.gone()
+            btnInstructions.style(R.style.PrimaryOutlinedButton)
+        }
+    }
 
+
+    private fun showItems() {
+        binding.run {
+            rvItems.visible()
+            btnRequiredItems.style(R.style.PrimaryButton)
+        }
+    }
+
+    private fun showInstructions() {
+        binding.run {
+            nsInstructions.visible()
+            btnInstructions.style(R.style.PrimaryButton)
+        }
     }
 
 }

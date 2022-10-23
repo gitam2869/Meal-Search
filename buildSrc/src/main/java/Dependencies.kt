@@ -13,6 +13,7 @@ object Versions {
     val coroutines = "1.6.4"
     val dagger_hilt = "2.42"
     val glide = "4.14.1"
+    val airbnb_styles = "2.0.0"
 }
 
 object Deps {
@@ -47,4 +48,8 @@ object Deps {
 
     //Glide
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
+
+    //Apply styles to android views
+    val airbnb_styles = "com.airbnb.android:paris:${Versions.airbnb_styles}"
+    val airbnb_styles_kapt = "com.airbnb.android:paris-processor:${Versions.airbnb_styles}"
 }

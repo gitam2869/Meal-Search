@@ -8,5 +8,6 @@
     <string name="not_match">Not match anything</string>
     <string name="items">Items</string>
     <string name="instructions">Instructions</string>
+    <string name="measurement">Measurement</string>
 
 </resources>

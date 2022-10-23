@@ -3,6 +3,8 @@
 
     <dimen name="button_padding_horizontal">4dp</dimen>
     <dimen name="button_padding_vertical">8dp</dimen>
-    <dimen name="button_radius">8dp</dimen>
+    <dimen name="button_radius">0dp</dimen>
+
+    <dimen name="button_bg_margin">2dp</dimen>
 
 </resources>
