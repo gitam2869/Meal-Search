@@ -14,11 +14,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.app.mealsearch.R
 import com.app.mealsearch.databinding.FragmentMealSearchBinding
 import com.app.mealsearch.domain.model.Meal
+import com.app.mealsearch.presentation.MainActivity
+import com.app.mealsearch.presentation.mealdetails.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MealSearchFragment : Fragment() {
+class MealSearchFragment : BaseFragment() {
 
     private val TAG = "MealSearchFragment"
 
@@ -41,9 +43,11 @@ class MealSearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activityMainBinding = (activity as MainActivity).binding
 
         defaultSetUp()
 
+        binding.svMeal.requestFocusFromTouch()
         binding.svMeal.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
@@ -129,5 +133,19 @@ class MealSearchFragment : Fragment() {
         findNavController().navigate(
             MealSearchFragmentDirections.actionMealSearchToMealDetails(mealId)
         )
+    }
+
+    private fun headerLayout(){
+        activityMainBinding?.layoutHeader?.header?.run {
+            navigationIcon = null
+            title = requireContext().resources.getString(R.string.app_name)
+        }
+    }
+
+    /*************** Life Cycle Events ****************/
+
+    override fun onResume() {
+        super.onResume()
+        headerLayout()
     }
 }
